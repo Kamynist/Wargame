@@ -4,7 +4,11 @@ import random
 conn = sqlite3.connect("db.db")
 cursor = conn.cursor()
 
-def Initialization():
+fix_conn = sqlite3.connect("fix_db.db")
+fix_cursor = fix_conn.cursor()
+
+
+def initialization():
     # Weapon
     for i in range(20):
         request = tuple()
