@@ -1,14 +1,16 @@
 import sqlite3
 import random
 
+
 conn = sqlite3.connect("db.db")
 cursor = conn.cursor()
+
 
 fix_conn = sqlite3.connect("fix_db.db")
 fix_cursor = fix_conn.cursor()
 
 
-def initialization():
+def initialization_main_db():
     # Weapon
     for i in range(20):
         request = tuple()
@@ -45,3 +47,16 @@ def initialization():
                   hull[random.randint(0, 4)], engine[random.randint(0, 5)]
         cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)", request)
         conn.commit()
+
+
+def initialization_fixture_db():
+    # Ships
+
+    # Weapons
+
+    # Hulls
+
+    # Engines
+
+
+

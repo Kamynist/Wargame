@@ -1,5 +1,5 @@
 import sqlite3
-from script import initialization
+from script import initialization_main_db
 
 conn = sqlite3.connect("db.db") # или :memory: чтобы сохранить в RAM
 cursor = conn.cursor()
@@ -86,7 +86,7 @@ def create_fixture_db():
 
 create_base_db()
 create_fixture_db()
-initialization()
+initialization_main_db()
 
 conn.close()
 fix_conn.close()
