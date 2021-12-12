@@ -7,6 +7,7 @@ cursor = conn.cursor()
 fix_conn = sqlite3.connect("fix_db.db")
 fix_cursor = fix_conn.cursor()
 
+
 def create_base_db():
     cursor.execute("""CREATE TABLE IF NOT EXISTS Ships(
                         ship TEXT PRIMARY KEY,
