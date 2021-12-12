@@ -1,33 +1,29 @@
 import sqlite3
 import random
 
-
 conn = sqlite3.connect("db.db")
 cursor = conn.cursor()
-
 
 fix_conn = sqlite3.connect("fix_db.db")
 fix_cursor = fix_conn.cursor()
 
-
 def initialization_main_db():
+    request = tuple()
+
     # Weapon
     for i in range(20):
-        request = tuple()
         request = "Weapon" + str(i), random.randint(1, 20), random.randint(1, 20),\
                   random.randint(1, 20), random.randint(1, 20), random.randint(1, 20)
         cursor.execute("INSERT OR REPLACE INTO Weapons VALUES(?, ?, ?, ?, ?, ?)", request)
         conn.commit()
     # Hull
     for i in range(5):
-        request = tuple()
         request = "Hull" + str(i), random.randint(1, 20), random.randint(1, 20), \
                   random.randint(1, 20)
         cursor.execute("INSERT OR REPLACE INTO Hulls VALUES(?, ?, ?, ?)", request)
         conn.commit()
     # Engine
     for i in range(6):
-        request = tuple()
         request = "Engine" + str(i), random.randint(1, 20), random.randint(1, 20)
         cursor.execute("INSERT OR REPLACE INTO Engine VALUES(?, ?, ?)", request)
         conn.commit()
@@ -47,16 +43,3 @@ def initialization_main_db():
                   hull[random.randint(0, 4)], engine[random.randint(0, 5)]
         cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)", request)
         conn.commit()
-
-
-def initialization_fixture_db():
-    # Ships
-
-    # Weapons
-
-    # Hulls
-
-    # Engines
-
-
-
