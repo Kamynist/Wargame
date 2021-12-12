@@ -1,5 +1,5 @@
 import sqlite3
-from script import initialization_main_db
+from script import initialization_main_db, initialization_fixture_db
 
 conn = sqlite3.connect("db.db") # или :memory: чтобы сохранить в RAM
 cursor = conn.cursor()
@@ -27,7 +27,7 @@ def create_base_db():
                         rotation_speed INT,
                         diameter INT,
                         power_volley INT,
-                        "count" INT);
+                        count INT);
                     """)
     conn.commit()
 
@@ -65,7 +65,7 @@ def create_fixture_db():
                             rotation_speed INT,
                             diameter INT,
                             power_volley INT,
-                            "count" INT);
+                            count INT);
                         """)
     fix_conn.commit()
 
@@ -87,6 +87,7 @@ def create_fixture_db():
 create_base_db()
 create_fixture_db()
 initialization_main_db()
+initialization_fixture_db()
 
 conn.close()
 fix_conn.close()
