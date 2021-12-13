@@ -30,24 +30,25 @@ def initialization_main_db():
 
     # Ships
     for i in range(200):
-        cursor.execute("SELECT weapon FROM Weapons")
-        weapon = cursor.fetchall()
+        #cursor.execute("SELECT weapon FROM Weapons")
+        #weapon = cursor.fetchall()
 
-        cursor.execute("SELECT hull FROM Hulls")
-        hull = cursor.fetchall()
+        #cursor.execute("SELECT hull FROM Hulls")
+        #hull = cursor.fetchall()
 
-        cursor.execute("SELECT engine FROM Engine")
-        engine = cursor.fetchall()
+        #cursor.execute("SELECT engine FROM Engine")
+        #engine = cursor.fetchall()
 
-        request = "Ships " + str(i), weapon[random.randint(0, 20)],\
-                  hull[random.randint(0, 4)], engine[random.randint(0, 5)]
+        #request = "Ships " + str(i), weapon[random.randint(0, 19)],\
+        # hull[random.randint(0, 4)], engine[random.randint(0, 5)]
+
+        request = "Ships " + str(i), "Weapon" + str(random.randint(0, 19)),\
+                  "Hull" + str(random.randint(0, 4)), "Engine" + str(random.randint(0, 5))
         cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)", request)
         conn.commit()
 
 def initialization_fixture_db():
     request = tuple()
-
-
     # Weapons
     cursor.execute("SELECT reload_speed FROM Weapons")
     reload_speed = cursor.fetchall()
@@ -84,6 +85,8 @@ def initialization_fixture_db():
 
         fix_cursor.execute("INSERT OR REPLACE INTO Weapons VALUES(?, ?, ?, ?, ?, ?)",
                            request)
+        fix_conn.commit()
+
 
 
     # Hull
@@ -107,6 +110,7 @@ def initialization_fixture_db():
 
         fix_cursor.execute("INSERT OR REPLACE INTO Hulls VALUES(?, ?, ?, ?)",
                            request)
+        fix_conn.commit()
 
 
     # Engine
@@ -125,6 +129,7 @@ def initialization_fixture_db():
 
         fix_cursor.execute("INSERT OR REPLACE INTO Engine VALUES(?, ?, ?)",
                            request)
+        fix_conn.commit()
 
 
     # Ships
@@ -149,3 +154,4 @@ def initialization_fixture_db():
 
         fix_cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)",
                            request)
+        fix_conn.commit()
