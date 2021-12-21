@@ -8,8 +8,6 @@ fix_conn = sqlite3.connect("fix_db.db")
 fix_cursor = fix_conn.cursor()
 
 def initialization_main_db():
-    request = tuple()
-
     # Weapon
     for i in range(20):
         request = "Weapon" + str(i), random.randint(1, 20), random.randint(1, 20),\
@@ -28,28 +26,35 @@ def initialization_main_db():
         cursor.execute("INSERT OR REPLACE INTO Engine VALUES(?, ?, ?)", request)
         conn.commit()
 
+    weapon, hull, engine = [], [], []
+
+    cursor.execute("SELECT weapon FROM Weapons")
+    weapon = cursor.fetchall()
+
+    cursor.execute("SELECT hull FROM Hulls")
+    hull = cursor.fetchall()
+
+    cursor.execute("SELECT engine FROM Engine")
+    engine = cursor.fetchall()
+
     # Ships
     for i in range(200):
-        #cursor.execute("SELECT weapon FROM Weapons")
-        #weapon = cursor.fetchall()
 
-        #cursor.execute("SELECT hull FROM Hulls")
-        #hull = cursor.fetchall()
+        request = 'Ships' + str(i), 'Weapon' + str(random.randint(0, 19)), \
+                  'Hull' + str(random.randint(0, 19)), 'Engine' + str(random.randint(0, 19))
 
-        #cursor.execute("SELECT engine FROM Engine")
-        #engine = cursor.fetchall()
-
-        #request = "Ships " + str(i), weapon[random.randint(0, 19)],\
-        # hull[random.randint(0, 4)], engine[random.randint(0, 5)]
-
-        request = "Ships " + str(i), "Weapon" + str(random.randint(0, 19)),\
-                  "Hull" + str(random.randint(0, 4)), "Engine" + str(random.randint(0, 5))
         cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)", request)
         conn.commit()
 
+
 def initialization_fixture_db():
-    request = tuple()
-    # Weapons
+    ######## Weapons ########
+    weapon, reload_speed, rotation_speed, \
+    diameter, power_volley, count = [], [], [], [], [], []
+
+    cursor.execute("SELECT weapon FROM Weapons")
+    weapon = cursor.fetchall()
+
     cursor.execute("SELECT reload_speed FROM Weapons")
     reload_speed = cursor.fetchall()
 
@@ -68,20 +73,20 @@ def initialization_fixture_db():
     for i in range(20):
         choice = random.randint(2, 6)
         if choice == 2:
-            request = "Weapon" + str(i), random.randint(1, 20), rotation_speed[i], \
-                      diameter[i], power_volley[i], count[i]
+            request = weapon[i] + reload_speed[random.randint(0, 20)] + rotation_speed[i] + \
+                      diameter[i] + power_volley[i] + count[i]
         elif choice == 3:
-            request = "Weapon" + str(i), reload_speed[i], random.randint(1, 20), \
-                      diameter[i], power_volley[i], count[i]
+            request = weapon[i] + reload_speed[i] + rotation_speed[random.randint(0, 19)] + \
+                      diameter[i] + power_volley[i] + count[i]
         elif choice == 4:
-            request = "Weapon" + str(i), reload_speed[i], rotation_speed[i], \
-                      random.randint(1, 20), power_volley[i], count[i]
+            request = weapon[i] + reload_speed[i] + rotation_speed[i] + \
+                      diameter[random.randint(0, 19)] + power_volley[i] + count[i]
         elif choice == 5:
-            request = "Weapon" + str(i), reload_speed[i], rotation_speed[i], \
-                      diameter[i], random.randint(1, 20), count[i]
+            request = weapon[i] + reload_speed[i] + rotation_speed[i] + \
+                      diameter[i] + power_volley[random.randint(0, 19)] + count[i]
         elif choice == 6:
-            request = "Weapon" + str(i), reload_speed[i], rotation_speed[i], \
-                      diameter[i], power_volley[i], random.randint(1, 20)
+            request = weapon[i] + reload_speed[i] + rotation_speed[i] + \
+                      diameter[i] + power_volley[i] + count[random.randint(0, 19)]
 
         fix_cursor.execute("INSERT OR REPLACE INTO Weapons VALUES(?, ?, ?, ?, ?, ?)",
                            request)
@@ -90,6 +95,11 @@ def initialization_fixture_db():
 
 
     # Hull
+    hull, armor, type, capacity = [], [], [], []
+
+    cursor.execute("SELECT hull FROM Hulls")
+    hull = cursor.fetchall()
+
     cursor.execute("SELECT armor FROM Hulls")
     armor = cursor.fetchall()
 
@@ -102,11 +112,11 @@ def initialization_fixture_db():
     for i in range(5):
         choice = random.randint(2, 4)
         if choice == 2:
-            request = "Hull" + str(i), random.randint(1, 20), type[i], capacity[i]
+            request = hull[i] + armor[random.randint(0, 4)] + type[i] + capacity[i]
         elif choice == 3:
-            request = "Hull" + str(i), armor, random.randint(1, 20), capacity[i]
+            request = hull[i] + armor[i] + type[random.randint(0, 4)] + capacity[i]
         elif choice == 4:
-            request = "Hull" + str(i), armor, type[i], random.randint(1, 20)
+            request = hull[i] + armor[i] + type[i] + capacity[random.randint(0, 4)]
 
         fix_cursor.execute("INSERT OR REPLACE INTO Hulls VALUES(?, ?, ?, ?)",
                            request)
@@ -114,18 +124,23 @@ def initialization_fixture_db():
 
 
     # Engine
+    engine, power, type = [], [], []
+
+    cursor.execute("SELECT engine FROM Engine")
+    engine = cursor.fetchall()
+
     cursor.execute("SELECT power FROM Engine")
     power = cursor.fetchall()
 
-    cursor.execute("SELECT type = FROM Engine")
+    cursor.execute("SELECT type FROM Engine")
     type = cursor.fetchall()
 
     for i in range(6):
         choice = random.randint(2, 3)
         if choice == 2:
-            request = "Engine" + str(i), random.randint(1, 20), type[i]
+            request = engine[i] + power[random.randint(0, 5)] + type[i]
         elif choice == 3:
-            request = "Engine" + str(i), power[i], random.randint(1, 20)
+            request = engine[i] + power[i] + type[random.randint(0, 5)]
 
         fix_cursor.execute("INSERT OR REPLACE INTO Engine VALUES(?, ?, ?)",
                            request)
@@ -133,24 +148,29 @@ def initialization_fixture_db():
 
 
     # Ships
-    cursor.execute("SELECT weapon = FROM Ships")
+    ship, weapon, hull, engine = [], [], [], []
+
+    cursor.execute("SELECT ship FROM Ships")
+    ship = cursor.fetchall()
+
+    cursor.execute("SELECT weapon FROM Ships")
     weapon = cursor.fetchall()
 
     cursor.execute("SELECT hull FROM Ships")
     hull = cursor.fetchall()
 
-    cursor.execute("SELECT engine = FROM Ships")
+    cursor.execute("SELECT engine FROM Ships")
     engine = cursor.fetchall()
 
     for i in range(200):
         choice = random.randint(2, 4)
 
         if choice == 2:
-            request = "Ship" + str(i), weapon[random.randint(0, 20)], hull[i], engine[i]
+            request = ship[i] + weapon[random.randint(0, 20)] + hull[i] + engine[i]
         elif choice == 3:
-            request = "Ship" + str(i), weapon[i], hull[random.randint(0, 4)], engine[i]
+            request = ship[i] + weapon[i] + hull[random.randint(0, 4)] + engine[i]
         elif choice == 4:
-            request = "Ship" + str(i), weapon[i], hull[i], engine[random.randint(0, 5)]
+            request = ship[i] + weapon[i] + hull[i] + engine[random.randint(0, 5)]
 
         fix_cursor.execute("INSERT OR REPLACE INTO Ships VALUES(?, ?, ?, ?)",
                            request)
