@@ -33,7 +33,7 @@ def create_base_db():
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS Hulls(
                         hull TEXT PRIMARY KEY,
-                        armor INT,
+                        armor INT,               
                         type INT,
                         capacity INT);
                     """)

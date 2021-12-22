@@ -76,7 +76,7 @@ def check_parts():
 
     ## Выбор нужного корпуса
     # 0 - title  1 - armor  2 - type  3 - capacity
-    for i in range(20):
+    for i in range(5):
         word = ''
         main_split, fix_split = [], []
 
@@ -99,10 +99,10 @@ def check_parts():
 
     ######## Engine ########
     # Title
-    cursor.execute("SELECT weapon FROM Engine")
+    cursor.execute("SELECT engine FROM Engine")
     engine_title = cursor.fetchall()
 
-    fix_cursor.execute("SELECT weapon FROM Engine")
+    fix_cursor.execute("SELECT engine FROM Engine")
     fix_engine_title = fix_cursor.fetchall()
 
     # Engine
@@ -114,7 +114,7 @@ def check_parts():
 
     ## Выбор нужного двигателя
     # 0 - title  1 - power  2 - type
-    for i in range(20):
+    for i in range(6):
         word = ''
         main_split, fix_split = [], []
 
@@ -141,6 +141,4 @@ def test_ship():
 
     fix_cursor.execute("SELECT ship FROM Ships")
     fix_ship = fix_cursor.fetchall()
-
     check_parts()
-
